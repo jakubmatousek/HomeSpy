@@ -14,8 +14,11 @@ app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 
 //SETUP  -  START
+
 const manager = new Manager();
 manager.loadFromDB()
+//manager.addConnectionToCurrentlyConnected(new Connection("32:21:33:21:11",Date.now(),"Black mesa inc."));
+
 //SETUP  -  END
 app.get('/', (req, res) => {
   res.send("all good in here")
@@ -35,10 +38,10 @@ app.use('/startConnection',(req,res)=>{
 
 app.post('/endConnection',(req,res)=>{
   console.log("END: "+req.body.MAC)
-  res.send("g")
   let MAC = req.body.MAC;
   manager.removeConnectionFromCurrentlyConnected(MAC);
   manager.saveToDB()
+  res.send('conn ended')
 });
 
 app.post('/newPerson',(req,res)=>{
@@ -46,17 +49,17 @@ app.post('/newPerson',(req,res)=>{
   let person = new Person(name);
   manager.addToSavedPeople(person)
   manager.saveToDB();
+  res.send()
 });
 
 app.post('/saveDevice',(req,res)=>{
 
-  console.log("get req /savePeople")
+  console.log("get req /saveDevice")
   let MAC = req.body.MAC
   let name = req.body.name
   let manufacturer = req.body.manufacturer
   if(personExsists){
     manager.savedPeople[getPersonIndex(name)].addDevice(MAC,manufacturer)
-    console.log("SAVEDPPL\n"+manager.savedPeople+"\n SAVED PPS END")
     manager.saveToDB(); 
   }else{
     console.log("Owner of the device not found")

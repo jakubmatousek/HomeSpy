@@ -20,7 +20,7 @@ class Manager {
         }
     }
 
-    removeConnectionFromCurrentlyConnected(MAC) {
+    removeConnectionFromCurrentlyConnected(MAC) { //OPRAVIT
         let connection = this.currentlyConnected[getConnectionIndex(MAC,this.currentlyConnected)]
         let savedAdresses = [];
         this.currentlyConnected.forEach(element => {
