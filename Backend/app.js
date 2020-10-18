@@ -28,7 +28,6 @@ app.post('/',(req,res)=>{
 });
 
 app.use('/startConnection',(req,res)=>{
-  console.log("START: "+req.body.MAC)
   res.send("g")
   let MAC = req.body.MAC;
   let manufacturer = req.body.manufacturer;
@@ -37,7 +36,6 @@ app.use('/startConnection',(req,res)=>{
 });
 
 app.post('/endConnection',(req,res)=>{
-  console.log("END: "+req.body.MAC)
   let MAC = req.body.MAC;
   manager.removeConnectionFromCurrentlyConnected(MAC);
   manager.saveToDB()
