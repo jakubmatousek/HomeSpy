@@ -4,6 +4,7 @@ from mac_vendor_lookup import MacLookup
 import urllib.parse
 import urllib.request
 import json
+from datetime import datetime
 
 nm = nmap.PortScanner()
 knownDevices = []
@@ -44,7 +45,7 @@ def scanDevices():
             devices.append(rHost)
     return devices            
 
-#-------MAIN---------##
+#-------MAIN---------#
 startUp()
 while(True):
     try:
@@ -78,7 +79,12 @@ while(True):
                 #send deisconnect req
         #print(len(knownDevices))
     except Exception as e:
-        pass
-        #print(e)
-
-
+        now = datetime.now()
+        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+        print("\\n\\n\\n exception date and time =", dt_string)
+        print(e)
+        print('\\n\\n\\n')
+        try:
+            startUp()
+        except Exception as e:
+            print(e)    
